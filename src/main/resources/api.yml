@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: CustomerMs
+  version: 1.0.0
+  description: Gestión clientes
+paths:
+  /clientes:
+    post:
+      summary: Crear un cliente nuevo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '201':
+          description: Cliente nuevo creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+    get:
+      summary: Listar todos los clientes
+      responses:
+        '200':
+          description: Clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+  /clientes/{id}:
+    get:
+      summary: Obtener detalles de un cliente por su ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Información del cliente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+    put:
+      summary: Actualizar los datos de un cliente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: Información del cliente actualizada
+    delete:
+      summary: Eliminar un cliente
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Cliente eliminado
+components:
+  schemas:
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        apellido:
+          type: string
+        dni:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - nombre
+        - apellido
+        - dni
+        - email
